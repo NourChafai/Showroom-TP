@@ -1,0 +1,49 @@
+<section class="search-section">
+  <!-- Carte de recherche -->
+  <div class="search-card">
+    <label for="brand" class="search-label">Search for your new car with us !</label>
+
+    <div class="search-input-group">
+      <input
+        id="brand"
+        type="text"
+        placeholder="e.g. Audi"
+        [(ngModel)]="brand"
+        (keyup.enter)="onSearch()"
+      />
+      <button type="button" (click)="onSearch()">Search</button>
+    </div>
+
+    <p class="search-hint">Try Audi, BMW…</p>
+  </div>
+
+  <!-- Nombre de résultats -->
+  <div class="result-info" *ngIf="filteredCars?.length">
+    {{ filteredCars.length }} car(s) found
+  </div>
+
+  <!-- Grille des voitures -->
+  <div class="cars-grid" *ngIf="filteredCars?.length; else noCars">
+    <article
+      class="car-card"
+      *ngFor="let car of filteredCars"
+      (click)="select(car)"
+    >
+      <img
+        class="car-thumb"
+        [src]="'/' + car.photo"
+        alt="{{ car.brand }} {{ car.model }}"
+      />
+
+      <div class="car-tag">{{ car.brand }}</div>
+      <h3>{{ car.model }}</h3>
+      <p class="car-year">Power: {{ car.power }} CV</p>
+      <p class="car-price">{{ car.price | currency: 'EUR' }}</p>
+    </article>
+  </div>
+
+  <!-- Pas de résultats -->
+  <ng-template #noCars>
+    <p class="no-cars">Sorry, We don't have this brand, try another one !</p>
+  </ng-template>
+</section>
